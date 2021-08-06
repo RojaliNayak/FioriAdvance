@@ -1,0 +1,15 @@
+<mvc:View
+		controllerName="YRTV_ONE_TILE.YRTV_ONE_TILE.controller.CreateVerify.BaseController"
+		xmlns:mvc="sap.ui.core.mvc"
+		xmlns="sap.m">
+	<MessagePage
+			id="page"
+			title="{i18nCreate>verifyTitle}"
+			text=""
+			icon="{sap-icon://product}"
+			description=""
+			showNavButton="{device>/system/phone}"
+			navButtonPress="onNavBack">
+	</MessagePage>
+
+</mvc:View>

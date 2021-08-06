@@ -1,0 +1,45 @@
+<core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core" xmlns:mvc="sap.ui.core.mvc" xmlns:l="sap.ui.layout">
+	<Dialog title="{i18n>BtnDtlRep}" class="sapMDialog">
+		<content>
+			<Panel xmlns="sap.m" width="auto" expandable="false" expanded="true" id="panel0">
+				<content>
+					<l:VerticalLayout width="100%">
+						<Label text="{i18n>Site}"/>
+						<Input width="100%" id="idSite" type="Text" liveChange="onSiteLiveChange"/>
+						<Label text="{i18n>createdDate}"/>
+						<HBox xmlns:core="sap.ui.core" xmlns:mvc="sap.ui.core.mvc" xmlns:l="sap.ui.layout" xmlns="sap.m" width="100%" id="hbox0_copy">
+							<items>
+								<DatePicker id="idDateSelection1" placeholder="MMddyyyy" change="handleDateChange1" valueFormat="MM/dd/yyyy" displayFormat="MM/dd/yyyy"
+									width="80%"/>
+								<Label text="{i18n>TO}" class="alligngTo"/>
+								<DatePicker id="idDateSelection2" placeholder="MMddyyyy" change="handleDateChange2" valueFormat="MM/dd/yyyy" displayFormat="MM/dd/yyyy"
+									width="80%"/>
+							</items>
+						</HBox>
+						<Label text="{i18n>Status}"/>
+						<Input id="multiInput" valueHelpOnly="true" showSuggestion="true" showValueHelp="true" valueHelpRequest="handleValueHelp">
+						</Input>
+						<!--<MultiComboBox id="multiInput" width="500px" items="{/StatusSet}">-->
+						<!--	<core:ListItem id="comboListItem" key="{Code}" text="{Description} ({Code})" />-->
+						<!--</MultiComboBox>-->
+						<Label text="{i18n>Vendors}"/>
+						<Input width="100%" id="idVendors" type="Text" liveChange="onVendorLiveChange"/>
+						<Label text="{i18n>LabelNum}"/>
+						<Input width="100%" id="idLabel" type="Text" liveChange="onLabelLiveChange"/>
+						<Label text="{i18n>RTVType}"/>
+						<Select width="100%" id="idRTVType" items="{/RTV_TypeSet}">
+							<items>
+								<core:Item text="{Desc}" key="{Type}"/>
+							</items>
+						</Select>
+					</l:VerticalLayout>
+				</content>
+			</Panel>
+		</content>
+		<buttons>
+			<Button id="searchButton" text="{i18n>Search}" type="Accept" press="onSearchReport"/>
+			<Button id="resetButton" text="{i18n>Reset}" type="Emphasized" press="onResetPress"/>
+			<Button id="closeButton" text="{i18n>Close}" type="Emphasized" press="onClosePress"/>
+		</buttons>
+	</Dialog>
+</core:FragmentDefinition>

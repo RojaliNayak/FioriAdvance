@@ -1,0 +1,19 @@
+<mvc:View xmlns:core="sap.ui.core" xmlns:mvc="sap.ui.core.mvc" xmlns="sap.m" controllerName="YRTV_ONE_TILE.YRTV_ONE_TILE.controller.Menu"
+	xmlns:html="http://www.w3.org/1999/xhtml">
+	<Page title="Title">
+		<customHeader>
+			<Toolbar>
+				<Button icon="sap-icon://nav-back" press="onNavBack"/>
+				<ToolbarSpacer/>
+				<Title text="RTV 2.0"/>
+				<ToolbarSpacer/>
+				<Button icon="sap-icon://menu2" press="onMenuButtonPress"/>
+			</Toolbar>
+		</customHeader>
+		<content>
+			<SelectList id="idMenu" items="{ path: '/MenuSet'}" itemPress="itemSelection">
+				<core:ListItem key="{Key}" text="{parts:[{path:'Key'}, {path: 'Count'}], formatter: '.getBundleText'}" icon="{Icon}" />
+			</SelectList>
+		</content>
+	</Page>
+</mvc:View>

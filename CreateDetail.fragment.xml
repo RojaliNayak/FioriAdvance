@@ -1,0 +1,238 @@
+<semantic:DetailPage xmlns:l="sap.ui.layout" xmlns="sap.m" xmlns:mvc="sap.ui.core.mvc" xmlns:semantic="sap.m.semantic"
+	xmlns:f="sap.ui.layout.form" xmlns:core="sap.ui.core" xmlns:app="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1" id="page"
+	navButtonPress="onNavBack" showNavButton="true" title="{i18nCreate>detailTitle}" busy="{detailView>/busy}"
+	busyIndicatorDelay="{detailView>/delay}">
+	<semantic:content>
+		<f:SimpleForm id="idDetailsForm" minWidth="1024" maxContainerCols="2" editable="true" layout="ResponsiveGridLayout" title="{i18nCreate>Details}"
+			labelSpanS="12" labelSpanL="4" labelSpanM="4" emptySpanL="0" emptySpanM="0" columnsL="2" columnsM="2" class="CommentsTitle">
+			<f:content>
+				<Label text="{i18nCreate>ReasonCode}"/>
+				<Select id="idReasonCodeSelect" items="{articleModel>/ReasonCodeSet}" selectedKey="{articleModel>/ReasonCode}" change="onReasonCodeChange"
+					forceSelection="false" width="100%">
+					<items>
+						<core:Item text="{articleModel>DESCRIPTION}" key="{articleModel>REASON_CODE}" app:DC_FLAG="{articleModel>SHOW_DC_VENDORS}"/>
+					</items>
+				</Select>
+				<Label text="{i18nCreate>OrderNum}" visible="{controlVis>/salesOrderVisible}"/>
+				<Input id="idOrderFld" type="Number" value="{articleModel>/OrderNumber}" placeholder="{i18nCreate>OrderNum}"
+					visible="{controlVis>/salesOrderVisible}" change="onOrderChange" liveChange="onLiveChangeOfOrder" maxLength="10">
+					<customData>
+						<core:CustomData key="oldValue" value=""/>
+					</customData>
+				</Input>
+				<Label/>
+				<Panel id="idPOtablePanel" class="poItemTable" headerText="{i18nCreate>POItems}" visible="{controlVis>/poTableVisible}" expandable="true"
+					expanded="true" width="auto">
+					<Table id="idPOitemTable" items="{path : 'poModel>/POItemSet/results'}" mode="SingleSelectMaster" selectionChange="onPOItemSelectionChange"
+						class="rtvTable">
+						<columns>
+							<Column demandPopin="false">
+								<Text text="{i18nCreate>PONum}"/>
+							</Column>
+							<Column demandPopin="false">
+								<Text text="{i18nCreate>POItemNum}"/>
+							</Column>
+							<Column demandPopin="false">
+								<Text text="{i18nCreate>Vendor}"/>
+							</Column>
+							<Column demandPopin="false">
+								<Text text="{i18nCreate>ItemCost}"/>
+							</Column>
+						</columns>
+						<items>
+							<ColumnListItem>
+								<cells>
+									<Text text="{poModel>COM_EBELN}"/>
+									<Text text="{poModel>COM_EBELP}"/>
+									<Text text="{poModel>LIFNR}"></Text>
+									<Text text="$ {poModel>NETPR}">
+										<customData>
+											<core:CustomData key="WAERS" value="{poModel>WAERS}"/>
+										</customData>
+									</Text>
+								</cells>
+								<customData>
+									<core:CustomData key="REF_VBELN" value="{poModel>REF_VBELN}"/>
+									<core:CustomData key="REF_VBELP" value="{poModel>REF_VBELP}"/>
+								</customData>
+							</ColumnListItem>
+						</items>
+					</Table>
+					<!--<layoutData>
+                        <l:GridData span="L9 M10 S12"/>
+                    </layoutData>-->
+				</Panel>
+				<Label text="{i18nCreate>OrderItemNum}" visible="{controlVis>/salesOrderItemVisible}"/>
+				<Select id="idOrderItemFld" visible="{controlVis>/salesOrderItemVisible}" items="{path:'poModel>/OrderItemSet/results'}"
+					change="onOrderItemChange">
+					<items >
+						<core:Item text="{poModel>COM_VBELP}" key="{poModel>COM_VBELP}"/>
+					</items>
+				</Select>
+				<Label text="{i18nCreate>PurchasrOrderNum}" visible="{=${articleModel>/ReasonCode} === '06' || ${articleModel>/ReasonCode} === '21'}"/>
+				<Input id="idPurchaseOrderNum" visible="{=${articleModel>/ReasonCode} === '06' || ${articleModel>/ReasonCode} === '21'}"
+					value="{articleModel>/PurchaseOrderNum}" change="onPurchaseOrderChange" placeholder="{i18nCreate>PurchasrOrderNum}"/>
+				<Label id="idVendorLabel" text="{i18nCreate>Vendor}"/>
+				<Select id="idVendorSelect" forceSelection="true" change="onVendorChange">
+					<items>
+						<core:Item text="{poModel>COM_VBELP}" key="{poModel>COM_VBELP}"/>
+					</items>
+				</Select>
+				<Label text="{i18nCreate>DefectiveAllowance}"/>
+				<Text id="idDefctAllw" text="{DEF_ALLOW}"/>
+				<core:Title text="" level="H1"></core:Title>
+				<Label text="{i18nCreate>Comments}"/>
+				<TextArea id="idCommentsFldCreate"
+					enabled="{=${articleModel>/OriginCode} === 'COM' &amp;&amp; ${articleModel>/Status} === '100' ? false : true}"
+					value="{articleModel>/Articles/0/Comments}" rows="6" maxLength="{=${articleModel>/EditComment} === true ? null : 255}"></TextArea>
+				<Label></Label>
+				<Button id="idEditCOMCreate" width="100%" icon="sap-icon://edit" text="{i18nCreate>EditComments}"
+					enabled="{=${articleModel>/OriginCode} === 'COM' }" visible="{=${articleModel>/EditComment} === true }" press="onEditCOMComment"></Button>
+			</f:content>
+		</f:SimpleForm>
+		<Table id="idArticlesTable" inset="false" class="articleTable rtvTableCreate rtvTable" items="{articleModel>/Articles}"
+			backgroundDesign="Solid">
+			<headerToolbar>
+				<Toolbar>
+					<Title text="{i18nCreate>Article}"/>
+					<ToolbarSpacer/>
+				</Toolbar>
+			</headerToolbar>
+			<columns>
+				<Column width="10em" minScreenWidth="45em" demandPopin="true">
+					<Text text="{i18nCreate>Article}"/>
+				</Column>
+				<Column vAlign="Middle" minScreenWidth="45em" demandPopin="true">
+					<Text text="{i18nCreate>Quantity}"/>
+				</Column>
+				<Column vAlign="Middle" minScreenWidth="45em" demandPopin="true">
+					<Text text="{i18nCreate>UoM}"/>
+				</Column>
+				<Column hAlign="Left" minScreenWidth="45em" demandPopin="true"
+					visible="{=${controlVis>/articleItemCostWithPO} &amp;&amp; ${articleModel>/ReasonCode} !== '20' &amp;&amp; ${articleModel>/ReasonCode} !== '30'}">
+					<Text text="{i18nCreate>ItemCost}"/>
+				</Column>
+				<Column width="11rem" hAlign="Left" minScreenWidth="45em" demandPopin="true"
+					visible="{=${controlVis>/articleItemCostNoPO} &amp;&amp; ${articleModel>/ReasonCode} !== '20' &amp;&amp; ${articleModel>/ReasonCode} !== '30'}">
+					<Text text="{i18nCreate>ItemCost}"/>
+				</Column>
+				<Column hAlign="Left" minScreenWidth="45em" demandPopin="true"
+					visible="{=${articleModel>/ReasonCode} === '20' || ${articleModel>/ReasonCode} === '30'}">
+					<Text text="{i18nCreate>NegotiatedCost}"/>
+				</Column>
+				<Column width="4.5rem" hAlign="Left" minScreenWidth="45em" demandPopin="true" visible="{=${articleModel>/MultiLabel}}" id="MultiLabelColumn">
+					<Text text="{i18nCreate>Multiple_Label}"/>
+				</Column>
+				<Column width="10rem" hAlign="Left" minScreenWidth="45em" demandPopin="true" visible="{controlVis>/linkLabelVisible}">
+					<Text text="{i18nCreate>Label}"/>
+				</Column>
+				<Column width="10rem" hAlign="Left" minScreenWidth="45em" demandPopin="true" visible="{= !${controlVis>/linkLabelVisible}}">
+					<Text text="{i18nCreate>Label}"/>
+				</Column>
+				<Column minScreenWidth="45em" demandPopin="true"
+					visible="{=${articleModel>/ReasonCode} !== '20' &amp;&amp; ${articleModel>/ReasonCode} !== '30' &amp;&amp; ${articleModel>/ReasonCode} !== '06' &amp;&amp; ${articleModel>/ReasonCode} !== '21'}">
+					<Text text="{i18nCreate>Disposition}"/>
+				</Column>
+				<Column minScreenWidth="45em" demandPopin="true"
+					visible="{=${articleModel>/ReasonCode} === '20' || ${articleModel>/ReasonCode} === '30' || ${articleModel>/ReasonCode} === '06' || ${articleModel>/ReasonCode} === '21'}">
+					<Text text="{i18nCreate>RGANum}"/>
+				</Column>
+				<Column width="1rem" visible="{= !${device>/system/phone} }" hAlign="Right"></Column>
+			</columns>
+			<items>
+				<ColumnListItem id="ArticleItem">
+					<cells>
+						<HBox>
+							<VBox width="95%">
+								<ObjectIdentifier title="{articleModel>MAKTX}"/>
+								<Link text="{articleModel>MATNR}" press="onArticleNumberPress" class="articleNumber"/>
+							</VBox>
+							<Button icon="sap-icon://navigation-right-arrow" press="onArticlesColumnPress" type="Emphasized" visible="{= ${device>/system/phone} }"/>
+						</HBox>
+						<Input id="ArticleQty" placeholder="{i18nCreate>Qty}" valueLiveUpdate="false" type="Number" maxLength="7" change="onQtyChange" submit="onQtyChange"
+							liveChange="onQuantityLiveChange" value="{articleModel>ItemQty}" enabled="{articleModel>QtyEnabled}">
+							<customData>
+								<core:CustomData key="LOGRT" value=""/>
+							</customData>
+							<layoutData>
+								<l:GridData span="L12 M12 S6"/>
+							</layoutData>
+						</Input>
+						<HBox>
+							<Text id="UoMText" text="{articleModel>/UoMText}"
+								visible="{=${articleModel>/OriginCode} === 'COM' || ${articleModel>/ReasonCode} === '06' || ${articleModel>/ReasonCode} === '21'}"/>
+							<Select id="UoMSelect" forceSelection="false" change="onUoMChange" autoAdjustWidth="true" enabled="{articleModel>UoMEnabled}"
+								visible="{=${articleModel>/OriginCode} !== 'COM' &amp;&amp; ${articleModel>/ReasonCode} !== '06' &amp;&amp; ${articleModel>/ReasonCode} !== '21'}"
+								items="{path : 'articleModel>UoMList',templateShareable:false}" selectedKey="{articleModel>SelectedUoM}">
+								<items>
+									<core:Item text="{articleModel>uom}" key="{articleModel>uom}"/>
+								</items>
+							</Select>
+						</HBox>
+						<Text text="{parts:[ {path:'articleModel>ItemCost'} ], formatter: '.formatter.itemCost'}"
+							visible="{= ${controlVis>/articleItemCostWithPO} &amp;&amp; !!${articleModel>ItemCost}}">
+							<customData>
+								<core:CustomData key="currency" value="{articleModel>ItemCostCurrency}"/>
+							</customData>
+						</Text>
+						<HBox
+							visible="{=${controlVis>/articleItemCostNoPO} &amp;&amp; ${articleModel>/ReasonCode} !== '20' &amp;&amp; ${articleModel>/ReasonCode} !== '30'}">
+							<Input class="itemCostFld" type="Number" submit="onItemCostChange" change="onItemCostChange" liveChange="onItemCostLiveChange"
+								maxLength="13" value="{articleModel>ItemCost}">
+								<customData>
+									<core:CustomData key="oldValue" value=""/>
+								</customData>
+							</Input>
+							<Select autoAdjustWidth="true" width="6rem" change="onCurrencyChange">
+								<items>
+									<core:Item text="CAD" key="CAD"/>
+									<core:Item text="USD" key="USD"/>
+								</items>
+							</Select>
+						</HBox>
+						<HBox visible="{=${articleModel>/ReasonCode} === '20' || ${articleModel>/ReasonCode} === '30'}">
+							<Input class="itemCostFld" type="Number" maxLength="13" value="{articleModel>NegotiatedCost}" liveChange="onNegotiatedCostLiveChange">
+								<customData>
+									<core:CustomData key="oldValue" value=""/>
+								</customData>
+							</Input>
+							<Select id="NagotiatedCostFld" autoAdjustWidth="true" width="6rem" selectedKey="{articleModel>NegotiatedCostCurrency}"
+								change="onCurrencyChange">
+								<items>
+									<core:Item text="CAD" key="CAD"/>
+									<core:Item text="USD" key="USD"/>
+								</items>
+							</Select>
+						</HBox>
+						<Switch id="MultiLabelSwitch" change="propogateLabels"
+							visible="{= parseInt ( ${articleModel>ItemQty} ) > 1 &amp;&amp; parseInt(${articleModel>ItemQty}) &lt;= parseInt(${articleModel>/MaxLabels}) }"
+							state="{articleModel>propogateLabels}" customTextOn="{i18nCreate>Yes}" customTextOff="{i18nCreate>No}"/>
+						<Link id="RTVLabelLink" text="{labelModel>/Label}" press="onRTVDetail" visible="{controlVis>/linkLabelVisible}" class="articleNumber"/>
+						<List items="{path : 'articleModel>Labels',templateShareable:false}" showNoData="false" id="LabelsTable">
+							<items>
+								<InputListItem id="LabelsTableItem">
+									<content>
+										<Input id="LabelInputField" textAlign="Begin" valueLiveUpdate="false" type="Number" maxLength="17" width="9.9rem" fieldWidth="100%"
+											showValueStateMessage="false" class="labelFld" enabled="{articleModel>Enabled}" value="{articleModel>Value}"
+											placeholder="{articleModel>Placeholder}" change="onLiveChangeOfLabel" submit="onLiveChangeOfLabel" liveChange="onLiveChangeOfLabel"/>
+											<!--placeholder="{articleModel>Placeholder}" change="onColorCodeUpdate" submit="onColorCodeUpdate" liveChange="onLiveChangeOfLabel"/>-->
+									</content>
+								</InputListItem>
+							</items>
+						</List>
+						<Text text="{articleModel>DispCodeText}">
+							<customData>
+								<core:CustomData key="DISP_COD" value="{articleModel>DISP_COD}"/>
+							</customData>
+						</Text>
+						<Input id="idCreateRGA" value="{articleModel>RGA}" maxLength="35" change="onRGAChange" enabled="{articleModel>RGAEnabled}"/>
+						<Button icon="sap-icon://navigation-right-arrow" press="onArticlesColumnPress" class="rGABtn" type="Emphasized" visible="{= !${device>/system/phone} }"/>
+					</cells>
+				</ColumnListItem>
+			</items>
+		</Table>
+	</semantic:content>
+	<semantic:customFooterContent>
+		<Button text="{i18nCreate>Create}" type="Emphasized" press="onGoPress" id="idCreateBtn" enabled="{articleModel>/CreateEnabled}"/>
+	</semantic:customFooterContent>
+</semantic:DetailPage>

@@ -1,0 +1,18 @@
+<core:FragmentDefinition
+	xmlns="sap.m"
+	xmlns:core="sap.ui.core">
+	<ViewSettingsDialog
+		confirm="handleConfirm">
+		<sortItems>
+			<ViewSettingsItem text="{i18n>Dept}" key="Dept" />
+			<ViewSettingsItem text="{i18n>ChargeVendor}" key="VendName" />
+			<ViewSettingsItem text="{i18n>Article}" key="Matnr" />
+			<ViewSettingsItem text="{i18n>ArticleDescription}" key="Maktx" />
+			<ViewSettingsItem text="{i18n>PartNumber}" key="Idnlf" />
+			<ViewSettingsItem text="{i18n>RTVLabelNumber}" key="LabelNum" />
+			<ViewSettingsItem text="{i18n>createdDate}" key="Erdat" selected="true"/>
+			<ViewSettingsItem text="{i18n>User}" key="Ernam" />
+			<ViewSettingsItem text="{i18n>RTVOverallStatus}" key="StatusName" />
+		</sortItems>
+	</ViewSettingsDialog>
+</core:FragmentDefinition>

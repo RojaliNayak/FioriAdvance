@@ -1,0 +1,29 @@
+<mvc:View xmlns="sap.m" xmlns:mvc="sap.ui.core.mvc" xmlns:semantic="sap.m.semantic" xmlns:f="sap.ui.layout.form" xmlns:core="sap.ui.core"
+	xmlns:footerbar="sap.ushell.ui.footerbar" controllerName="YRTV_ONE_TILE.YRTV_ONE_TILE.controller.CreateVerify.AdditionalDetail" xmlns:l="sap.ui.layout">
+	<semantic:DetailPage id="additionalDetailspage" navButtonPress="onNavBack" showNavButton="true" title="{i18n>additionalDetails}">
+		<semantic:content>
+			<f:SimpleForm id="idAdditionalDetailsForm" minWidth="1024" maxContainerCols="2" editable="true" layout="ResponsiveGridLayout" labelSpanL="3"
+				labelSpanM="3" labelSpanS="4" emptySpanL="4" emptySpanM="4" columnsL="1" columnsM="1" class="editableForm">
+				<f:content>
+					<Label text="{i18n>Retail}"/>
+					<Text text="{parts:[ {path:'articleModel>/Articles/0/Retail'}  ], formatter: '.formatter.itemCost'}" id="idRetailFld"/>
+					<Label text="{i18n>OnlineOnly}"/>
+					<Text text="{path: 'articleModel>/Articles/0/OnlineOnly', formatter: '.formatter.onlineOnly'}"/>
+					<Label id="idRGANum" text="{i18n>RGANum}" visible="{=${articleModel>/ReasonCode} !== '20'  &amp;&amp; ${articleModel>/ReasonCode} !== '30' &amp;&amp; ${articleModel>/ReasonCode} !== '06'  &amp;&amp; ${articleModel>/ReasonCode} !== '21'}"/>
+					<Input id="idRGAFld" class="RGAField" change="onRGAChange" liveChange="onRGAFldLiveChange" maxLength="35" value="{articleModel>/Articles/0/RGA}" visible="{=${articleModel>/ReasonCode} !== '20'  &amp;&amp; ${articleModel>/ReasonCode} !== '30' &amp;&amp; ${articleModel>/ReasonCode} !== '06'  &amp;&amp; ${articleModel>/ReasonCode} !== '21'}"/>
+					<Label text="{i18n>RTVLocation}"/>
+					<Input id="idRTVLocationFld" maxLength="25" value="{articleModel>/Articles/0/RtvLoc}"/>
+				</f:content>
+			</f:SimpleForm>
+			<!--<f:SimpleForm id="idCommentsForm" minWidth="1024" maxContainerCols="2" editable="true" layout="ResponsiveGridLayout" labelSpanL="3"
+				labelSpanM="3" labelSpanS="4" emptySpanL="4" emptySpanM="4" columnsL="1" columnsM="1" class="editableForm detailComments">
+				<f:content>
+					<Label text="{i18n>Comments}"/>
+					<TextArea id="idCommentsFld" enabled="{=${articleModel>/OriginCode} === 'COM' &amp;&amp; ${articleModel>/Status} === '100' ? false : true}" value="{articleModel>/Articles/0/Comments}" rows="6" maxLength="{=${articleModel>/EditComment} === true ? null : 255}"></TextArea>
+					<Label></Label>
+					<Button id="idEditCOM" width="100%" icon="sap-icon://edit" text="{i18n>EditComments}" enabled="{=${articleModel>/OriginCode} === 'COM' }" visible="{=${articleModel>/EditComment} === true }" press="onEditCOMComment"></Button>
+				</f:content>
+			</f:SimpleForm>-->
+		</semantic:content>
+	</semantic:DetailPage>
+</mvc:View>

@@ -1,0 +1,14 @@
+<mvc:View
+		
+		xmlns:mvc="sap.ui.core.mvc"
+		xmlns="sap.m">
+	<MessagePage
+			id="page"
+			title="{i18nCreate>notAvailableViewTitle}"
+			icon="{sap-icon://product}"
+			description=""
+			text=""
+			showNavButton="{device>/system/phone}"
+			navButtonPress="onNavBack">
+	</MessagePage>
+</mvc:View>

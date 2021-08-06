@@ -1,0 +1,119 @@
+<mvc:View xmlns="sap.m" xmlns:mvc="sap.ui.core.mvc" xmlns:semantic="sap.m.semantic" xmlns:core="sap.ui.core" xmlns:footerbar="sap.ushell.ui.footerbar" controllerName="YRTV_ONE_TILE.YRTV_ONE_TILE.controller.CageReport.Worklist">
+
+	<semantic:FullscreenPage id="page" navButtonPress="onNavBack" showNavButton="true" title="{i18n>worklistViewTitle}">
+		<semantic:customHeaderContent>
+			<Button text="{i18n>Sort}" icon="sap-icon://drop-down-list" press="onViewSettingsPress" class="fontBoldCustom"/>
+		</semantic:customHeaderContent>	
+		<semantic:content>
+			<Table id="idCageTable" width="auto" class="sapUiResponsiveMargin" items="{      path: 'cageModel>/results'     }" noDataText="{worklistView>/tableNoDataText}" busyIndicatorDelay="{worklistView>/tableBusyDelay}" updateFinished="onUpdateFinished" growing="true" growingScrollToLoad="true">
+				<columns>
+					<Column width="2rem" minScreenWidth="Tablet" demandPopin="true">
+						<Text text="{i18n>Dept}" class="fontBoldCustom"/>
+					</Column>
+					<Column width="6rem" minScreenWidth="Tablet" demandPopin="true">
+						<Text text="{i18n>ChargeVendor}" class="fontBoldCustom"/>
+					</Column>
+					<Column width="4rem" minScreenWidth="Tablet" demandPopin="true">
+						<Text text="{i18n>Article}" class="fontBoldCustom"/>
+					</Column>
+					<Column width="6rem" minScreenWidth="Tablet" demandPopin="true">
+						<Text text="{i18n>ArticleDescription}" class="fontBoldCustom"/>
+					</Column>
+					<Column width="3rem" minScreenWidth="Tablet" demandPopin="true">
+						<Text text="{i18n>PartNumber}" class="fontBoldCustom"/>
+					</Column>
+					<Column width="7rem" minScreenWidth="Tablet" demandPopin="true">
+						<Text text="{i18n>RTVLabelNumber}" class="fontBoldCustom"/>
+					</Column>
+					<Column width="4rem" minScreenWidth="Tablet" demandPopin="true">
+						<Text text="{i18n>DateCreated}" class="fontBoldCustom"/>
+					</Column>
+					<Column width="3rem" minScreenWidth="Tablet" demandPopin="true">
+						<Text text="{i18n>Qty}" class="fontBoldCustom"/>
+					</Column>
+					<Column width="3rem" minScreenWidth="Tablet" demandPopin="true">
+						<Text text="{i18n>Cost}" class="fontBoldCustom"/>
+					</Column>
+					<Column width="3rem" minScreenWidth="Tablet" demandPopin="true">
+						<Text text="{i18n>TotalCost}" class="fontBoldCustom"/>
+					</Column>
+					<Column width="3rem" minScreenWidth="Tablet" demandPopin="true">
+						<Text text="{i18n>User}" class="fontBoldCustom"/>
+					</Column>
+					<Column width="5rem" minScreenWidth="Tablet" demandPopin="true">
+						<Text text="{i18n>RTVOverallStatus}" class="fontBoldCustom"/>
+					</Column>
+				</columns>
+
+				<items>
+					<ColumnListItem>
+						<customData>
+	                      <core:CustomData key="background" value="{cageModel>setBackground}" writeToDom="true"/>
+	                    </customData>
+						<cells>
+							<Text text="{cageModel>Dept}">
+								<customData>
+			                      <core:CustomData key="font" value="{cageModel>setBackground}" writeToDom="true"/>
+			                    </customData>
+			                </Text>
+							<Text text="{cageModel>VendName}">
+								<customData>
+			                      <core:CustomData key="font" value="{cageModel>setBackground}" writeToDom="true"/>
+			                    </customData>
+			                </Text>
+							<Text text="{cageModel>Matnr}">
+								<customData>
+			                      <core:CustomData key="font" value="{cageModel>setBackground}" writeToDom="true"/>
+			                    </customData>
+			                </Text>
+							<Text text="{cageModel>Maktx}">
+								<customData>
+			                      <core:CustomData key="font" value="{cageModel>setBackground}" writeToDom="true"/>
+			                    </customData>
+			                </Text>    
+							<Text text="{cageModel>Idnlf}">
+								<customData>
+			                      <core:CustomData key="font" value="{cageModel>setBackground}" writeToDom="true"/>
+			                    </customData>
+			                </Text>
+							<Text text="{cageModel>LabelNum}">
+								<customData>
+			                      <core:CustomData key="font" value="{cageModel>setBackground}" writeToDom="true"/>
+			                    </customData>
+			                </Text>
+			                <Text text="{path:'cageModel>Erdat',formatter: '.formatter.getFormattedDate'}"/>
+							<Text text="{parts: [{path: 'cageModel>Menge'},{path: 'cageModel&gt;Meins'}], formatter:'.formatter.truncateQty'}">
+								<customData>
+			                      <core:CustomData key="font" value="{cageModel>setBackground}" writeToDom="true"/>
+			                    </customData>
+							</Text>
+							<Text text="{path: 'cageModel>ItemCost', formatter:'.formatter.truncateValue'}"/>
+							<Text text="{path: 'cageModel>ExtCost', formatter:'.formatter.truncateValue'}">
+								<customData>
+			                      <core:CustomData key="font" value="{cageModel>setBackground}" writeToDom="true"/>
+			                    </customData>
+			                 </Text>
+							<Text text="{cageModel>Ernam}">
+								<customData>
+			                      <core:CustomData key="font" value="{cageModel>setBackground}" writeToDom="true"/>
+			                    </customData>
+			                </Text>
+							<Text text="{cageModel>StatusName}">
+								<customData>
+			                      <core:CustomData key="font" value="{cageModel>setBackground}" writeToDom="true"/>
+			                    </customData>
+			                </Text>
+						</cells>
+					</ColumnListItem>
+				</items>
+			</Table>
+		</semantic:content>
+		<semantic:customFooterContent>
+			<!--<Label text="{i18n>DownloadReportAs}:"/>-->
+			<Button text="{i18n>DownloadExcel}" icon="sap-icon://excel-attachment" press="onExportToExcel" type="Emphasized" tooltip="{i18n>ExportExcel}"/>
+			<Button text="{i18n>DownloadPDF}" icon="sap-icon://pdf-attachment" press="onExportToPDF" type="Emphasized" tooltip="{i18n>ExportPDF}"/>
+			<Button text="{i18n>BtnDtlRep}" icon="sap-icon://expense-report" press="onGetSelection" type="Emphasized" tooltip="{i18n>Selection}"/>
+		</semantic:customFooterContent>
+	</semantic:FullscreenPage>
+
+</mvc:View>

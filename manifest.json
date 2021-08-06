@@ -1,0 +1,516 @@
+{
+	"_version": "1.3.0",
+	"sap.app": {
+		"_version": "1.3.0",
+		"id": "YRTV_ONE_TILE.YRTV_ONE_TILE",
+		"type": "application",
+		"i18n": "i18n/i18n.properties",
+		"applicationVersion": {
+			"version": "1.0.0"
+		},
+		"dataSources": {
+			"CageService": {
+				"uri": "/sap/opu/odata/SAP/YDRTV_RTV_CREATE_SRV/",
+				"type": "OData",
+				"settings": {
+					"odataVersion": "2.0",
+					"localUri": "localService/metadata.xml"
+				}
+			},
+			"createRTVService": {
+				"uri": "/sap/opu/odata/SAP/YDRTV_RTV_CREATE_SRV/",
+				"type": "OData",
+				"settings": {
+					"annotations": [],
+					"odataVersion": "2.0",
+					"localUri": ""
+				}
+			},
+			"YDRTV_RTV_CREATE_SRV": {
+				"uri": "/sap/opu/odata/sap/YDRTV_RTV_CREATE_SRV/",
+				"type": "OData",
+				"settings": {
+					"localUri": "localService/YDRTV_RTV_CREATE_SRV/metadata.xml"
+				}
+			},
+			"YDRTV_PCT_CALL_SRV": {
+				"uri": "/sap/opu/odata/sap/YDRTV_PCT_CALL_SRV/",
+				"type": "OData",
+				"settings": {
+					"localUri": "localService/YDRTV_PCT_CALL_SRV/metadata.xml"
+				}
+			},
+			"YDRTV_RTV_VIEW3_SRV": {
+				"uri": "/sap/opu/odata/sap/YDRTV_RTV_VIEW3_SRV/",
+				"type": "OData",
+				"settings": {
+					"localUri": "localService/YDRTV_RTV_VIEW3_SRV/metadata.xml"
+				}
+			},
+			"YDMM_OVERHEAD_MANAGEMENT_SRV": {
+				"uri": "/sap/opu/odata/sap/YDMM_OVERHEAD_MANAGEMENT_SRV/",
+				"type": "OData",
+				"settings": {
+					"localUri": "localService/YDMM_OVERHEAD_MANAGEMENT_SRV/metadata.xml"
+				}
+			}
+		},
+		"title": "{{appTitle}}",
+		"description": "{{appDescription}}",
+		"sourceTemplate": {
+			"id": "ui5template.basicSAPUI5ApplicationProject",
+			"version": "1.40.12"
+		}
+	},
+	"sap.ui": {
+		"_version": "1.3.0",
+		"technology": "UI5",
+		"icons": {
+			"icon": "",
+			"favIcon": "",
+			"phone": "",
+			"phone@2": "",
+			"tablet": "",
+			"tablet@2": ""
+		},
+		"deviceTypes": {
+			"desktop": true,
+			"tablet": true,
+			"phone": true
+		},
+		"supportedThemes": [
+			"sap_hcb",
+			"sap_bluecrystal"
+		]
+	},
+	"sap.ui5": {
+		"_version": "1.2.0",
+		"rootView": {
+			"viewName": "YRTV_ONE_TILE.YRTV_ONE_TILE.view.App",
+			"type": "XML",
+			"async": true,
+			"id": "App"
+		},
+		"dependencies": {
+			"minUI5Version": "1.65.6",
+			"libs": {
+				"sap.ui.core": {},
+				"sap.m": {},
+				"sap.tnt": {},
+				"sap.ui.layout": {},
+				"sap.uxap": {},
+				"sap.suite.ui.microchart": {
+					"lazy": true
+				}
+			}
+		},
+		"contentDensities": {
+			"compact": true,
+			"cozy": true
+		},
+		"models": {
+			"i18n": {
+				"type": "sap.ui.model.resource.ResourceModel",
+				"settings": {
+					"bundleName": "YRTV_ONE_TILE.YRTV_ONE_TILE.i18n.i18n"
+				}
+			},
+			"METi18n": {
+				"type": "sap.ui.model.resource.ResourceModel",
+				"settings": {
+					"bundleName": "YRTV_ONE_TILE.YRTV_ONE_TILE.i18n.METWorklist.i18n"
+				}
+			},
+			"WorkListi18n": {
+				"type": "sap.ui.model.resource.ResourceModel",
+				"settings": {
+					"bundleName": "YRTV_ONE_TILE.YRTV_ONE_TILE.i18n.Worklist.i18n"
+				}
+			},
+			"menu": {
+				"type": "sap.ui.model.json.JSONModel",
+				"uri": "model/MenuContent.json"
+			},
+			"CageModel": {
+				"dataSource": "CageService",
+				"preload": true
+			},
+			"i18nCage": {
+				"type": "sap.ui.model.resource.ResourceModel",
+				"settings": {
+					"bundleName": "YRTV_ONE_TILE.YRTV_ONE_TILE.i18n.CageAudit.i18n"
+				}
+			},
+			"i18nCreate": {
+				"type": "sap.ui.model.resource.ResourceModel",
+				"settings": {
+					"bundleName": "YRTV_ONE_TILE.YRTV_ONE_TILE.i18n.CreateVerify.i18n"
+				}
+			},
+			"i18nBuyback": {
+				"type": "sap.ui.model.resource.ResourceModel",
+				"settings": {
+					"bundleName": "YRTV_ONE_TILE.YRTV_ONE_TILE.i18n.Buyback.i18n"
+				}
+			},
+			"": {
+				"type": "sap.ui.model.odata.v2.ODataModel",
+				"settings": {
+					"defaultOperationMode": "Server",
+					"defaultBindingMode": "OneWay",
+					"defaultCountMode": "Request",
+					"useBatch": true
+				},
+				"dataSource": "YDRTV_RTV_CREATE_SRV",
+				"preload": true
+			},
+			"oPCTModel": {
+				"type": "sap.ui.model.odata.v2.ODataModel",
+				"settings": {
+					"defaultOperationMode": "Server",
+					"defaultBindingMode": "OneWay",
+					"defaultCountMode": "Request"
+				},
+				"dataSource": "YDRTV_PCT_CALL_SRV"
+			},
+			"OHMModel": {
+				"type": "sap.ui.model.odata.v2.ODataModel",
+				"settings": {
+					"defaultOperationMode": "Server",
+					"defaultBindingMode": "OneWay",
+					"defaultCountMode": "Inline"
+				},
+				"dataSource": "YDMM_OVERHEAD_MANAGEMENT_SRV"
+			}
+		},
+		"resources": {
+			"js": [
+				{
+					"uri": "js/thd_utils.js"
+				}
+			],
+			"css": [
+				{
+					"uri": "css/style.css",
+					"id": "baseCSS"
+				}
+			]
+		},
+		"routing": {
+			"config": {
+				"routerClass": "sap.m.routing.Router",
+				"viewType": "XML",
+				"async": true,
+				"viewPath": "YRTV_ONE_TILE.YRTV_ONE_TILE.view",
+				"controlId": "app",
+				"controlAggregation": "pages",
+				"clearControlAggregation": false
+			},
+			"routes": [
+				{
+					"pattern": "",
+					"name": "home",
+					"target": "home"
+				},
+				{
+					"name": "Menu",
+					"pattern": "Menu",
+					"target": [
+						"Menu"
+					]
+				},
+				{
+					"pattern": "VerifyItems",
+					"name": "VerifyItems",
+					"target": [
+						"detailNoObjectsAvailable",
+						"master"
+					]
+				},
+				{
+					"pattern": "CreateRTV/{Werks}/{reasonCd}/{article}:vendor:",
+					"name": "createDetail",
+					"target": [
+						"master",
+						"createDetail"
+					]
+				},
+				{
+					"pattern": "{Werks}/{LabelNum}/{Search}",
+					"name": "verify",
+					"target": [
+						"master",
+						"verify"
+					]
+				},
+				{
+					"pattern": "NotAvailable",
+					"name": "detailObjectNotFound",
+					"target": [
+						"detailObjectNotFound"
+					]
+				},
+				{
+					"name": "articleAdditionalDetail",
+					"pattern": "CreateRTV/{article}/{vendor}/{reasonCd}/{onlineStatus}/AdditionalDetails",
+					"titleTarget": "",
+					"greedy": false,
+					"target": [
+						"master",
+						"articleDetail"
+					]
+				},
+				{
+					"pattern": "CageAudit",
+					"name": "CageAudit",
+					"target": [
+						"worklist"
+					]
+				},
+				{
+					"pattern": "Worklist",
+					"name": "newAudit",
+					"target": [
+						"newAudit"
+					]
+				},
+				{
+					"pattern": "VendorWorklist",
+					"name": "VendorWorklist",
+					"target": "VendorWorklist"
+				},
+				{
+					"pattern": "tab/{selectedKey}",
+					"name": "VendorWorklist_tab",
+					"target": "VendorWorklist"
+				},
+				{
+					"pattern": "Vendor/{vendor}",
+					"name": "vendordetails",
+					"target": "VendorWorklistDetails"
+				},
+				{
+					"pattern": "Shipment/{site}/{shipmentID}",
+					"name": "shipmentDetails",
+					"target": "VendorWorklistShipmentDetails"
+				},
+				{
+					"pattern": "NewAudit/:siteId:/:auditDate:",
+					"name": "discrepancyList",
+					"target": [
+						"discrepancyList"
+					]
+				},
+				{
+					"pattern": "DiscrepancyList/{siteId}/:auditDate:",
+					"name": "notFound",
+					"target": [
+						"worklist"
+					]
+				},
+				{
+					"pattern": "LabelSet/{objectId}/{site}/{region}",
+					"name": "METobject",
+					"target": [
+						"METobject"
+					]
+				},
+				{
+					"name": "METWorklist",
+					"pattern": "METWorklist",
+					"target": [
+						"METWorklist"
+					]
+				},
+				{
+					"pattern": "Buyback",
+					"name": "Buyback",
+					"target": [
+						"notFoundBuyback",
+						"masterBuyback"
+					]
+				},
+				{
+					"pattern": "PO_LISTSet/{ABELN}/{EBELN}/{WERKS}",
+					"name": "object",
+					"target": [
+						"masterBuyback",
+						"object"
+					]
+				},
+				{
+					"pattern": "CageReport",
+					"name": "CageReport",
+					"target": [
+						"worklistCageReport"
+					]
+				}
+			],
+			"targets": {
+				"home": {
+					"viewId": "home",
+					"viewName": "Home"
+				},
+				"Menu": {
+					"viewName": "Menu",
+					"viewId": "Menu"
+				},
+				"idAppControl": {
+					"viewId": "idAppControl",
+					"viewName": "CreateVerify.CreateApp"
+				},
+				"master": {
+					"viewName": "CreateVerify.Master",
+					"viewLevel": 1,
+					"viewId": "master",
+					"controlAggregation": "masterPages",
+					"controlId": "idAppControl",
+					"parent": "idAppControl"
+				},
+				"detailNoObjectsAvailable": {
+					"viewName": "CreateVerify.DetailNoObjectsAvailable",
+					"viewId": "detailNoObjectsAvailable",
+					"controlAggregation": "detailPages",
+					"controlId": "idAppControl",
+					"parent": "idAppControl"
+				},
+				"createDetail": {
+					"viewName": "CreateVerify.CreateDetail",
+					"viewId": "createDetail",
+					"viewLevel": 2
+				},
+				"articleDetail": {
+					"viewName": "CreateVerify.ArticleDetail",
+					"viewId": "articleDetail",
+					"viewLevel": 3
+				},
+				"detailObjectNotFound": {
+					"viewName": "CreateVerify.DetailObjectNotFound",
+					"viewId": "detailObjectNotFound"
+				},
+				"notFoundCreate": {
+					"viewName": "CreateVerify.NotFound",
+					"viewId": "notFound"
+				},
+				"verify": {
+					"viewName": "CreateVerify.Verify",
+					"viewId": "Verify",
+					"viewLevel": 2,
+					"clearControlAggregation": false,
+					"controlAggregation": "detailPages",
+					"controlId": "idAppControl",
+					"parent": "idAppControl"
+				},
+				"METWorklist": {
+					"viewType": "XML",
+					"transition": "slide",
+					"clearControlAggregation": false,
+					"viewName": "METWorklist.Worklist",
+					"viewId": "METWorklist",
+					"viewLevel": 1
+				},
+				"METobject": {
+					"viewName": "METWorklist.Object",
+					"viewId": "object",
+					"viewLevel": 2
+				},
+				"METobjectNotFound": {
+					"viewName": "METWorklist.ObjectNotFound",
+					"viewId": "objectNotFound"
+				},
+				"METnotFound": {
+					"viewName": "METWorklist.NotFound",
+					"viewId": "notFound"
+				},
+				"worklist": {
+					"viewName": "CageAudit.Worklist",
+					"viewId": "worklist"
+				},
+				"newAudit": {
+					"viewName": "CageAudit.NewAudit",
+					"viewId": "newAudit",
+					"viewLevel": 1
+				},
+				"discrepancyList": {
+					"viewName": "CageAudit.DiscrepancyList",
+					"viewId": "discrepancyList",
+					"viewLevel": 2
+				},
+				"objectNotFound": {
+					"viewName": "CageAudit.ObjectNotFound",
+					"viewId": "objectNotFound"
+				},
+				"notFound": {
+					"viewName": "CageAudit.NotFound",
+					"viewId": "notFound"
+				},
+				"VendorWorklistDetails": {
+					"viewName": "Worklist.VendorDetails",
+					"viewId": "vendordetails",
+					"viewLevel": 2
+				},
+				"VendorWorklistShipmentDetails": {
+					"viewName": "Worklist.ShipmentDetails",
+					"viewId": "idshipmentdetails",
+					"viewLevel": 2
+				},
+				"VendorWorklistObjectNotFound": {
+					"viewName": "Worklist.ObjectNotFound",
+					"viewId": "objectNotFound"
+				},
+				"VendorWorklistNotFound": {
+					"viewName": "Worklist.NotFound",
+					"viewId": "notFound"
+				},
+				"VendorWorklist": {
+					"viewName": "Worklist.Worklist",
+					"viewId": "worklist"
+				},
+				"idAppBuyback": {
+					"viewId": "idAppBuyback",
+					"viewName": "Buyback.App"
+				},
+				"masterBuyback": {
+					"viewName": "Buyback.Master",
+					"viewLevel": 1,
+					"viewId": "masterBuyback",
+					"controlAggregation": "masterPages",
+					"controlId": "idAppBuyback",
+					"parent": "idAppBuyback"
+				},
+				"object": {
+					"viewName": "Buyback.Detail",
+					"viewId": "detailBuyback",
+					"viewLevel": 2,
+					"controlAggregation": "detailPages",
+					"controlId": "idAppBuyback",
+					"parent": "idAppBuyback"
+				},
+				"detailObjectNotFoundBuyback": {
+					"viewName": "Buyback.DetailObjectNotFound",
+					"viewId": "detailObjectNotFound"
+				},
+				"detailNoObjectsAvailableBuyback": {
+					"viewName": "Buyback.DetailNoObjectsAvailable",
+					"viewId": "detailNoObjectsAvailable"
+				},
+				"notFoundBuyback": {
+					"viewName": "Buyback.NotFound",
+					"viewId": "notFound",
+					"controlAggregation": "detailPages",
+					"controlId": "idAppBuyback",
+					"parent": "idAppBuyback"
+				},
+				"worklistCageReport": {
+					"viewName": "CageReport.Worklist",
+					"viewId": "worklist",
+					"viewLevel": 1
+				}
+			}
+		}
+	},
+	"sap.platform.abap": {
+		"uri": "/sap/bc/ui5_ui5/sap/yrtv_onetile",
+		"_version": "1.1.0"
+	}
+}

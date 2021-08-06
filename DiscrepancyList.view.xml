@@ -1,0 +1,85 @@
+<mvc:View controllerName="YRTV_ONE_TILE.YRTV_ONE_TILE.controller.CageAudit.DiscrepancyList" xmlns="sap.m" xmlns:mvc="sap.ui.core.mvc"
+	xmlns:semantic="sap.m.semantic">
+	<semantic:FullscreenPage id="discPage" navButtonPress="onNavBack" showNavButton="true" title="{i18nCage>discrepancyListTitle}" busy="{objectView>/busy}"
+		busyIndicatorDelay="{objectView>/delay}">
+		<semantic:content>
+			<IconTabBar tabDensityMode="{= ${device>/system/phone} === true ? 'Compact' : 'Cozy'}" select="onTabSelect" id="idCageDiscrepancyTab"
+				expandable="false" stretchContentHeight="false" class="destroyTabClass tabClass">
+				<items>
+					<IconTabFilter id="idPending" text="{i18nCage>missedScan}" key="pending" icon="sap-icon://clinical-tast-tracker" design="Horizontal" >
+						<ScrollContainer id="pendingScroll" height="80vh" width="100%" horizontal="false" vertical="true">
+							<Table id="idPendingScanTable" inset="false" 
+								growing="true" growingScrollToLoad="true" growingThreshold="20" noDataText="{i18nCage>unscanTableNoDataText}" class="rtvTable">
+								<columns>
+									<Column demandPopin="true" width="12rem" vAlign="Middle" hAlign="Left">
+										<Text text="{i18nCage>rtvLabel}"/>
+									</Column>
+									<Column minScreenWidth="Tablet" demandPopin="true" width="15rem" vAlign="Middle" hAlign="Left">
+										<Text text="{i18nCage>status}"/>
+									</Column>
+									<Column minScreenWidth="Tablet" demandPopin="true" width="8rem" vAlign="Middle" hAlign="Left">
+										<Text text="{i18nCage>article}"/>
+									</Column>
+									<Column minScreenWidth="Tablet" demandPopin="true" width="20rem" vAlign="Middle" hAlign="Left">
+										<Text text="{i18nCage>desc}"/>
+									</Column>
+									<Column minScreenWidth="Tablet" demandPopin="true" width="auto" vAlign="Middle" hAlign="Left">
+										<Text text="{i18nCage>cost}"/>
+									</Column>
+								</columns>
+							</Table>
+						</ScrollContainer>
+					</IconTabFilter>
+					<IconTabSeparator icon=""/>
+					<IconTabFilter id="idScanned" key="scanned" text="{i18nCage>scanned}"  icon="sap-icon://task" design="Horizontal">
+						<Table id="idScannedTable" updateFinished="tableNotBusy" updateStarted="tableBusy" growing="true" growingScrollToLoad="true" growingThreshold="20"
+							noDataText="{i18nCage>scanTableNoDataText}" class="rtvTable">
+							<columns>
+								<Column demandPopin="true" width="auto" vAlign="Middle" hAlign="Left">
+									<Text text="{i18nCage>rtvLabel}"/>
+								</Column>
+								<Column minScreenWidth="Tablet" demandPopin="true" width="auto" vAlign="Middle" hAlign="Left">
+									<Text text="{i18nCage>status}"/>
+								</Column>
+								<Column minScreenWidth="Tablet" demandPopin="true" width="auto" vAlign="Middle" hAlign="Left">
+									<Text text="{i18nCage>article}"/>
+								</Column>
+								<Column minScreenWidth="Tablet" demandPopin="true" width="auto" vAlign="Middle" hAlign="Left">
+									<Text text="{i18nCage>desc}"/>
+								</Column>
+								<Column minScreenWidth="Tablet" demandPopin="true" width="auto" vAlign="Middle" hAlign="Left">
+									<Text text="{i18nCage>cost}"/>
+								</Column>
+							</columns>
+						</Table>
+					</IconTabFilter>
+					<IconTabSeparator icon=""/>
+					<IconTabFilter id="idAdditional" key="additional" text="{i18nCage>additional}" icon="sap-icon://survey" design="Horizontal">
+						<ScrollContainer id="AdditionalScroll" height="80vh" width="100%" horizontal="false" vertical="true">
+							<Table id="idAdditionalScanTable" updateFinished="tableNotBusy" updateStarted="tableBusy" growing="true" growingScrollToLoad="true" growingThreshold="20"
+								noDataText="{i18nCage>addiTableNoDataText}" class="rtvTable">
+								<columns>
+									<Column demandPopin="true" width="auto" vAlign="Middle" hAlign="Left">
+										<Text text="{i18nCage>rtvLabel}"/>
+									</Column>
+									<Column minScreenWidth="Tablet" demandPopin="true" width="auto" vAlign="Middle" hAlign="Left">
+										<Text text="{i18nCage>status}"/>
+									</Column>
+									<Column minScreenWidth="Tablet" demandPopin="true" width="auto" vAlign="Middle" hAlign="Left">
+										<Text text="{i18nCage>article}"/>
+									</Column>
+									<Column minScreenWidth="Tablet" demandPopin="true" width="auto" vAlign="Middle" hAlign="Left">
+										<Text text="{i18nCage>desc}"/>
+									</Column>
+									<Column minScreenWidth="Tablet" demandPopin="true" width="auto" vAlign="Middle" hAlign="Left">
+										<Text text="{i18nCage>cost}"/>
+									</Column>
+								</columns>
+							</Table>
+						</ScrollContainer>
+					</IconTabFilter>
+				</items>
+			</IconTabBar>
+		</semantic:content>
+	</semantic:FullscreenPage>
+</mvc:View>

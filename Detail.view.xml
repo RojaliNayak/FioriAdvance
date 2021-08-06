@@ -1,0 +1,221 @@
+<mvc:View xmlns="sap.m" xmlns:mvc="sap.ui.core.mvc" xmlns:semantic="sap.m.semantic" xmlns:l="sap.ui.layout" xmlns:f="sap.ui.layout.form" xmlns:footerbar="sap.ushell.ui.footerbar" controllerName="YRTV_ONE_TILE.YRTV_ONE_TILE.controller.Buyback.Detail">
+	<semantic:DetailPage id="page" navButtonPress="onNavBack" showNavButton="{device>/system/phone}" title="{i18nBuyback>detailTitle}" busy="{detailView>/busy}" busyIndicatorDelay="{detailView>/delay}">
+		<semantic:content>
+			<ObjectHeader id="objectHeader" title="{buybackDetailsModel>/NAME1} - {buybackDetailsModel>/LIFNR}" number="{=${buybackDetailsModel>/MET_VEND} === 'Y' ? 'MET' : ''}">
+				<attributes>
+					<ObjectAttribute title="{i18nBuyback>articles}" text="{buybackDetailsModel>/ART_COUNT}"/>
+					<ObjectAttribute title="{i18nBuyback>open}" text="{buybackDetailsModel>/OPEN_COUNT}"/>
+					<ObjectAttribute title="{i18nBuyback>department}" text="{path:'buybackDetailsModel>/DEPT', formatter:'.formatter.removeLeadingZeroes'} - {buybackDetailsModel>/DEPTTEXT}"/>
+				</attributes>
+				<statuses>
+					<ObjectStatus title="{i18nBuyback>po}" text="{path:'buybackDetailsModel>/EBELN', formatter:'.formatter.removeLeadingZeroes'}"/>
+					<ObjectStatus title="{i18nBuyback>due}" text="{path : 'buybackDetailsModel>/EINDT', formatter : '.formatDate'}" state="{path: 'buybackDetailsModel>/EINDT', formatter: '.dueDateStatus'}"/>
+				</statuses>
+			</ObjectHeader>
+			<!--<ProgressIndicator percentValue="30" displayValue="30%" showValue="true" class="progressBar" state="None"/>-->
+			<!--<f:SimpleForm editable="true" layout="ResponsiveGridLayout" labelSpanXL="3" labelSpanL="3" labelSpanM="3" labelSpanS="12" adjustLabelSpan="false" emptySpanXL="4" emptySpanL="4" emptySpanM="4" emptySpanS="0" columnsXL="1" columnsL="1" columnsM="1" singleContainerFullSize="false">-->
+			<!--	<f:content>-->
+			<!--		<Label text="{i18nBuyback>rga}"/>-->
+			<!--		<Input value="{buybackDetailsModel>/RGA_NUM}" maxLength="35" editable="{=!${buybackDetailsModel>/RGA_NUM1}}"/>-->
+			<!--	</f:content>-->
+			<!--</f:SimpleForm>-->
+			<IconTabBar id="iconTabBar" expandable="false" selectedKey="details" select="onTabChange" class="sapUiResponsiveContentPadding">
+				<items>
+					<IconTabFilter id="detailsTab" key="details" text="{i18nBuyback>detailsTab}">
+						<f:SimpleForm editable="true" layout="ResponsiveGridLayout" labelSpanXL="3" labelSpanL="3" labelSpanM="3" labelSpanS="12" adjustLabelSpan="false" emptySpanXL="4" emptySpanL="4" emptySpanM="4" emptySpanS="0" columnsXL="1" columnsL="1" columnsM="1" singleContainerFullSize="false">
+							<f:content>
+								<Label text="{i18nBuyback>specialInst}"/>
+								<TextArea rows="4" value="{buybackDetailsModel>/INSTRUCTION}" enabled="false"/>
+								<Label text="{i18nBuyback>rga}"/>
+								<Text text="{buybackDetailsModel>/RGA_NUM}"/>
+								<Label text="{i18nBuyback>reasonCd}"/>
+								<Text text="{buybackDetailsModel>/DESCRIPTION}"/>
+								<Label text="{i18nBuyback>Disposition}"/>
+								<Text text="{buybackDetailsModel>/DISPOSITION}"/>
+								<!--<ObjectAttribute text="{buybackDetailsModel>/DESCRIPTION}" id="attribute10" title="{i18nBuyback>reasonCd}"/>-->
+							</f:content>
+						</f:SimpleForm>
+					</IconTabFilter>
+					<IconTabFilter key="articles" id="articlesTab" text="{i18nBuyback>articlesTab}">
+						<ScrollContainer height="100%" width="100%" horizontal="false" vertical="true">
+							<Toolbar width="100%">
+								<content>
+									<SearchField id="oScanArticle" placeholder="{i18nBuyback>scanOrEnterUpcOrArticle}" search="onSearchArticle" liveChange="onLabelScan"/>
+								</content>
+							</Toolbar>
+							<Table id="idScannedArticlesTable" inset="false" items="{buybackDetailsModel>/ScannedArticles}" growingScrollToLoad="true" growing="true" growingThreshold="99" fixedLayout="{= ${device>/system/phone} === true ? false : true}" backgroundDesign="Solid" mode="Delete" delete="onRemoveScannedArticle">
+								<headerToolbar>
+									<Toolbar>
+										<Title text="{i18nBuyback>scanned}"/>
+										<ToolbarSpacer/>
+									</Toolbar>
+								</headerToolbar>
+								<columns>
+									<Column width="6em" minScreenWidth="45em" visible="{= !${device>/system/phone} }" demandPopin="true">
+										<Text text="{i18nBuyback>image}"/>
+									</Column>
+									<Column width="13em" minScreenWidth="45em" demandPopin="true">
+										<Text text="{i18nBuyback>article}"/>
+									</Column>
+									<Column width="5em" minScreenWidth="45em" demandPopin="true">
+										<Text text="{i18nBuyback>Bay}"/>
+									</Column>
+									<Column width="5em" minScreenWidth="45em" demandPopin="true">
+										<Text text="{i18nBuyback>OVBay}"/>
+									</Column>
+									<Column width="5em" minScreenWidth="45em" demandPopin="true">
+										<Text text="{i18nBuyback>onHand}"/>
+									</Column>
+									<Column width="7em" minScreenWidth="45em" demandPopin="true">
+										<Text text="{i18nBuyback>buyback}"/>
+									</Column>
+								</columns>
+								<items>
+									<ColumnListItem id="scannedArticleItem">
+										<cells>
+											<Image src="{buybackDetailsModel>IMAGEURL}" densityAware="false"/>
+											<VBox width="95%">
+												<Image src="{buybackDetailsModel>IMAGEURL}" visible="{= ${device>/system/phone} }"/>
+												<ObjectIdentifier title="{buybackDetailsModel>MAKTX}"/>
+												<Link text="{buybackDetailsModel>MATNR}" press="navigateToALU"/>
+											</VBox>
+											<ObjectAttribute text="{buybackDetailsModel>BAYLOC}" active="{ path : 'buybackDetailsModel>ToBay', formatter : '.formatter.getBayLinkActive'}" press="onBayInfoPress"/>
+											<ObjectAttribute text="{buybackDetailsModel>OVBAY}" active="{ path : 'buybackDetailsModel>ToOHMBay', formatter : '.formatter.getBayLinkActive'}" press="onOVBayInfoPress"/>
+											<Text text="{buybackDetailsModel>ON_HAND_QTY} {buybackDetailsModel&gt;MEINS}"/>
+											<HBox alignItems="Center">
+												<Input width="6rem" value="{buybackDetailsModel>SAVED_QTY}" liveChange="onSaveQtyChange" type="Number" showValueStateMessage="false"/>											
+												<!--<Input width="6rem" value="{buybackDetailsModel>SAVED_QTY}"/>-->
+												<Text text="" class=" sapUiTinyMarginBegin articleUoM"/>
+												<Text text="{buybackDetailsModel>MEINS}" class="articleUoM"/>
+											</HBox>
+										</cells>
+									</ColumnListItem>
+								</items>
+							</Table>
+							<Table id="idPendingArticlesTable" inset="false" items="{buybackDetailsModel>/PendingArticles}" fixedLayout="{= ${device>/system/phone} === true ? false : true}" growingScrollToLoad="true" growing="true" growingThreshold="99"  backgroundDesign="Solid">
+								<headerToolbar>
+									<Toolbar>
+										<Title text="{i18nBuyback>pendingScan}"/>
+										<ToolbarSpacer/>
+									</Toolbar>
+								</headerToolbar>
+								<columns>
+									<Column width="6em" minScreenWidth="45em" visible="{= !${device>/system/phone} }" demandPopin="true">
+										<Text text="{i18nBuyback>image}"/>
+									</Column>
+									<Column width="13em" minScreenWidth="45em" demandPopin="true">
+										<Text text="{i18nBuyback>article}"/>
+									</Column>
+									<Column width="5em" minScreenWidth="45em" demandPopin="true">
+										<Text text="{i18nBuyback>Bay}"/>
+									</Column>
+									<Column width="5em" minScreenWidth="45em" demandPopin="true">
+										<Text text="{i18nBuyback>OVBay}"/>
+									</Column>
+									<Column width="5em" minScreenWidth="45em" demandPopin="true">
+										<Text text="{i18nBuyback>onHand}"/>
+									</Column>
+									<!--<Column width="7em" minScreenWidth="45em" demandPopin="true">-->
+									<!--	<Text/>-->
+									<!--</Column>-->
+									<!--<Column width="1em" minScreenWidth="45em" demandPopin="true">-->
+									<!--	<Text/>-->
+									<!--</Column>-->
+								</columns>
+								<items>
+									<ColumnListItem id="pendingArticleItem">
+										<cells>
+											<Image src="{buybackDetailsModel>IMAGEURL}" densityAware="false"/>
+											<VBox width="95%">
+												<Image src="{buybackDetailsModel>IMAGEURL}" visible="{= ${device>/system/phone} }"/>
+												<ObjectIdentifier title="{buybackDetailsModel>MAKTX}"/>
+												<Link text="{buybackDetailsModel>MATNR}" press="navigateToALU"/>
+											</VBox>
+										    <ObjectAttribute text="{buybackDetailsModel>BAYLOC}" active="{ path : 'buybackDetailsModel>ToBay', formatter : '.formatter.getBayLinkActive'}" press="onBayInfoPress"/>
+											<ObjectAttribute text="{buybackDetailsModel>OVBAY}" active="{ path : 'buybackDetailsModel>ToOHMBay', formatter : '.formatter.getBayLinkActive'}" press="onOVBayInfoPress"/>
+											<Text text="{buybackDetailsModel>ON_HAND_QTY} {buybackDetailsModel&gt;MEINS}"/>
+											<!--<Text/>-->
+										</cells>
+									</ColumnListItem>
+								</items>
+							</Table>
+						</ScrollContainer>
+					</IconTabFilter>
+					<IconTabFilter key="complete" id="completeTab" text="{i18nBuyback>completeTab}">
+						<Table id="idCompletedTable" inset="false" items="{buybackDetailsModel>/CompleteArticles}" fixedLayout="{= ${device>/system/phone} === true ? false : true}" backgroundDesign="Solid">
+							<!--<headerToolbar>
+							<Toolbar>
+								<Title text="{i18nBuyback>complete}"/>
+								<ToolbarSpacer/>
+							</Toolbar>
+						</headerToolbar>-->
+							<columns>
+								<Column width="3em" minScreenWidth="45em" demandPopin="true">
+									<Text text="{i18nBuyback>image}"/>
+								</Column>
+								<Column width="13em" minScreenWidth="45em" demandPopin="true">
+									<Text text="{i18nBuyback>article}"/>
+								</Column>
+								<Column width="5em" minScreenWidth="45em" demandPopin="true">
+									<Text text="{i18nBuyback>buyback}"/>
+								</Column>
+								<Column width="7em" minScreenWidth="45em" demandPopin="true">
+									<Text text="{i18nBuyback>rtvlabel}"/>
+								</Column>
+							</columns>
+							<items>
+								<ColumnListItem>
+									<cells>
+										<!--<Image src="{buybackDetailsModel>IMAGEURL}"/>-->
+										<Image src="{buybackDetailsModel>ArtImage}" densityAware="false"/>
+										<VBox width="95%">
+											<ObjectIdentifier title="{buybackDetailsModel>MAKTX}"/>
+											<Link text="{buybackDetailsModel>MATNR}" press="navigateToALU"/>
+										</VBox>
+										<Text text="{buybackDetailsModel>MENGE} {buybackDetailsModel&gt;MEINS}"/>
+										<Link text="{buybackDetailsModel>LABEL_NUM}" class="labelLinkBox" press="onRTVDetail"/>
+									</cells>
+								</ColumnListItem>
+							</items>
+						</Table>
+					</IconTabFilter>
+					<IconTabFilter key="contact" id="contactTab" text="{i18nBuyback>contactTab}">
+						<f:SimpleForm editable="true" layout="ResponsiveGridLayout" labelSpanXL="4" labelSpanL="4" labelSpanM="4" labelSpanS="6" adjustLabelSpan="false" emptySpanXL="3" emptySpanL="3" emptySpanM="3" emptySpanS="0" columnsXL="1" columnsL="1" columnsM="1" singleContainerFullSize="false">
+							<f:content>
+								<Label text="{i18nBuyback>sscContact}"/>
+								<Text text="{buybackDetailsModel>/CONTACT_HD}"/>
+								<Label text="{i18nBuyback>sscPhone}"/>
+								<Text text="{buybackDetailsModel>/TEL_NUMBER_HD}"/>
+								<Label text="{i18nBuyback>sscEmail}"/>
+								<Text text="{buybackDetailsModel>/EMAIL_ADDRESS_HD}"/>
+								<Label/>
+								<!--<Button width="8rem" text="{i18nBuyback>emailMerchant}" press="onMerchantEmailPress">-->
+								<!--	<layoutData>-->
+								<!--		<l:GridData span="XL2 L2 M2 S6"/>-->
+								<!--	</layoutData>-->
+								<!--</Button>-->
+								<Label text="{i18nBuyback>vendorContact}"/>
+								<Text text="{buybackDetailsModel>/CONTACT_VEN}"/>
+								<Label text="{i18nBuyback>vendorPhone}"/>
+								<Text text="{buybackDetailsModel>/TEL_NUMBER_VEN}"/>
+								<Label text="{i18nBuyback>vendorEmail}"/>
+								<Text text="{buybackDetailsModel>/EMAIL_ADDRESS_VEN}"/>
+								<!--<Button text="{i18nBuyback>emailMerchant}" press="onMerchantEmailPress"/>-->
+							</f:content>
+						</f:SimpleForm>
+					</IconTabFilter>
+				</items>
+			</IconTabBar>
+		</semantic:content>
+		<semantic:customFooterContent>
+			<!--<HBox justifyContent="Start" width="20%">-->
+				<Button id="messagePopoverBtn" icon="sap-icon://message-error" press=".handleMessagePopoverPress" type="Reject" visible="false"/>
+			<!--</HBox>-->
+			<!--<HBox justifyContent="End" width="80%">-->
+				<Button id="idPrintBtn" visible="false" text="{i18nBuyback>printBtn}" type="Emphasized"/>
+				<Button id="idSaveBtn" visible="false" text="{i18nBuyback>saveBtn}" type="Emphasized" press="onSavePress"/>
+				<Button id="idSubmitBtn" visible="false" text="{i18nBuyback>submitBtn}" type="Emphasized" press="onSubmit"/>
+			<!--</HBox>-->
+	</semantic:customFooterContent>
+	</semantic:DetailPage>
+</mvc:View>

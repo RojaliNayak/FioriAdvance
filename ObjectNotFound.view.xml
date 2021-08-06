@@ -1,0 +1,17 @@
+<mvc:View
+	controllerName="YRTV_ONE_TILE.YRTV_ONE_TILE.controller.CageAudit.NotFound"
+	xmlns:mvc="sap.ui.core.mvc"
+	xmlns="sap.m">
+
+	<MessagePage
+		title="{i18nCageCage>objectTitle}"
+		text="{i18nCage>noObjectFoundText}"
+		icon="{sap-icon://product}"
+		description=""
+		id="page">
+		<customDescription>
+			<Link id="link" text="{i18nCage>backToWorklist}" press="onLinkPressed" />
+		</customDescription>
+	</MessagePage>
+
+</mvc:View>

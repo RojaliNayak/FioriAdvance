@@ -1,0 +1,141 @@
+<mvc:View controllerName="YRTV_ONE_TILE.YRTV_ONE_TILE.controller.CageAudit.NewAudit" xmlns="sap.m" xmlns:mvc="sap.ui.core.mvc" xmlns:semantic="sap.m.semantic">
+	<semantic:FullscreenPage navButtonPress="onNavBack" showNavButton="true" title="{i18nCage>newAuditTitle}" busy="{objectView>/busy}"
+		busyIndicatorDelay="{objectView>/delay}">
+		<semantic:subHeader class="bottom2rem">
+			<Bar class="height4rem">
+				<contentMiddle>
+					<VBox width="100%" direction="Column" id="vbox0">
+						<items>
+						<SearchField id="idScanFld" width="100%" placeholder="{i18nCage>ScanOrEnterRTVLabel}" 
+						showRefreshButton="false"	search="onSearchLabel" />
+					    </items>
+					</VBox>
+				</contentMiddle>
+			</Bar>
+		</semantic:subHeader>
+		<semantic:content>
+			<IconTabBar tabDensityMode="{= ${device>/system/phone} === true ? 'Compact' : 'Cozy'}" select="onTabSelect" id="idNewCageTab"
+				expandable="false" stretchContentHeight="false" class="destroyTabClass tabClass">
+				<items>
+					<IconTabFilter id="idPendingNew" text="{i18nCage>pendingScan}" key="pending" icon="sap-icon://clinical-tast-tracker" design="Horizontal" count="">
+						
+							<Table id="idPendingScanTableNew" updateFinished="tableNotBusy" updateStarted="tableBusy" items="{ path : 'CageModel>/LabelDetailSet'}" class="rtvTable" 
+			                growingThreshold = "20" growing="true" growingScrollToLoad="true" noDataText="{i18nCage>unscanTableNoDataText}" sticky="HeaderToolbar">
+
+							<columns>
+								<Column demandPopin="true" width="auto" vAlign="Middle" hAlign="Left">
+									<Text text="{i18nCage>rtvLabel}"/>
+								</Column>
+								<Column minScreenWidth="Tablet" demandPopin="true" width="auto" vAlign="Middle" hAlign="Left">
+									<Text text="{i18nCage>status}"/>
+								</Column>
+								<Column minScreenWidth="Tablet" demandPopin="true" width="auto" vAlign="Middle" hAlign="Left">
+									<Text text="{i18nCage>article}"/>
+								</Column>
+								<Column minScreenWidth="Tablet" demandPopin="true" width="auto" vAlign="Middle" hAlign="Left">
+									<Text text="{i18nCage>desc}"/>
+								</Column>
+								<Column minScreenWidth="Tablet" demandPopin="true" width="auto" vAlign="Middle" hAlign="Left">
+									<Text text="{i18nCageCage>cost}"/>
+								</Column>
+							</columns>
+							<items>
+								<ColumnListItem>
+									<cells>
+										<Link id="idScannedLabelNew" text="{CageModel>LabelNum}" press="onRTVDetail" class="labelLinkBox"/>
+										<Text text="{CageModel>StatusDesc}"/>
+										<Text text="{CageModel>Article}"/>
+										<Text text="{CageModel>Desc}"/>
+										<Text text="{path:'CageModel>Cost' , formatter: '.formatter.formatCost'}"/>
+									</cells>
+								</ColumnListItem>
+							</items>
+						</Table>
+					</IconTabFilter>
+					<IconTabSeparator icon=""/>
+						<IconTabFilter id="idScannedNew" key="scanned" text="{i18nCage>scanned}" count="0" icon="sap-icon://task" design="Horizontal">
+						<Table id="idScannedTableNew" updateFinished="tableNotBusy" updateStarted="tableBusy" items="{ path : 'labelListModel>/ScannedList'}" class="rtvTable" 
+			                noDataText="{i18nCage>unscanTableNoDataText}">
+							<columns>
+								<Column demandPopin="true" width="auto" vAlign="Middle" hAlign="Left">
+									<Text text="{i18nCageCage>rtvLabel}"/>
+								</Column>
+								<Column minScreenWidth="Tablet" demandPopin="true" width="auto" vAlign="Middle" hAlign="Left">
+									<Text text="{i18nCageCage>status}"/>
+								</Column>
+								<Column minScreenWidth="Tablet" demandPopin="true" width="auto" vAlign="Middle" hAlign="Left">
+									<Text text="{i18nCage>article}"/>
+								</Column>
+								<Column minScreenWidth="Tablet" demandPopin="true" width="auto" vAlign="Middle" hAlign="Left">
+									<Text text="{i18nCageCage>desc}"/>
+								</Column>
+								<Column minScreenWidth="Tablet" demandPopin="true" width="auto" vAlign="Middle" hAlign="Left">
+									<Text text="{i18nCage>cost}"/>
+								</Column>
+							</columns>
+							<items>
+								<ColumnListItem>
+									<cells>
+										<Link id="idPendingScanLabelNew" text="{labelListModel>LabelNum}" press="onRTVDetail" class="labelLinkBox"/>
+										<Text text="{labelListModel>StatusDesc}"/>
+										<Text text="{labelListModel>Article}"/>
+										<Text text="{labelListModel>Desc}"/>
+										<Text text="{path:'labelListModel>Cost' , formatter: '.formatter.formatCost'}"/>
+									</cells>
+								</ColumnListItem>
+							</items>
+						</Table>
+					</IconTabFilter>
+					<IconTabSeparator icon=""/>
+					<IconTabFilter id="idAdditionalNew" key="additional" text="{i18nCage>additional}" count="80" icon="sap-icon://survey" design="Horizontal">
+					<Table id="idScannedTableAdditional" updateFinished="tableNotBusy" updateStarted="tableBusy" items="{ path : 'labelListModel>/DiscrepancyList'}" class="rtvTable" 
+			                noDataText="{i18nCage>unscanTableNoDataText}">
+							<columns>
+								<Column demandPopin="true" width="auto" vAlign="Middle" hAlign="Left">
+									<Text text="{i18nCage>rtvLabel}"/>
+								</Column>
+								<Column minScreenWidth="Tablet" demandPopin="true" width="auto" vAlign="Middle" hAlign="Left">
+									<Text text="{i18nCage>status}"/>
+								</Column>
+								<Column minScreenWidth="Tablet" demandPopin="true" width="auto" vAlign="Middle" hAlign="Left">
+									<Text text="{i18nCage>article}"/>
+								</Column>
+								<Column minScreenWidth="Tablet" demandPopin="true" width="auto" vAlign="Middle" hAlign="Left">
+									<Text text="{i18nCage>desc}"/>
+								</Column>
+								<Column minScreenWidth="Tablet" demandPopin="true" width="auto" vAlign="Middle" hAlign="Left">
+									<Text text="{i18nCage>cost}"/>
+								</Column>
+							</columns>
+							<items>
+								<ColumnListItem>
+									<cells>
+										<Link id="idPendingScanLabelAdditional" text="{labelListModel>LabelNum}" press="onRTVDetail" class="labelLinkBox"/>
+										<Text text="{labelListModel>StatusDesc}"/>
+										<Text text="{labelListModel>Article}"/>
+										<Text text="{labelListModel>Desc}"/>
+										<Text text="{path:'labelListModel>Cost' , formatter: '.formatter.formatCost'}"/>
+									</cells>
+								</ColumnListItem>
+							</items>
+						</Table>
+					</IconTabFilter>
+				</items>
+			</IconTabBar>
+			<!--<Panel width="auto" class="sapUiSmallMargin">-->
+			<!--	<content>-->
+			<!--		<VBox>-->
+			<!--			<HBox>-->
+			<!--				<Text text="{i18nCage>lastScanned}:" class="sapUiSmallMarginTopBottom"/>-->
+			<!--				<Text id="idScannedTxt" text="{labelListModel>/lastScanned}" class="sapUiSmallMarginTopBottom"/>-->
+			<!--			</HBox>-->
+			<!--			<Text text="{i18nCage>scanCount}:{labelListModel>/scanCount}" class="sapUiSmallMarginTopBottom"/>-->
+			<!--		</VBox>-->
+			<!--	</content>-->
+			<!--</Panel>-->
+		</semantic:content>
+		<semantic:customFooterContent>
+			<Button text="{i18nCage>auditSubmit}" press="onAuditSubmit" type="Emphasized"/>
+		</semantic:customFooterContent>
+	</semantic:FullscreenPage>
+</mvc:View>

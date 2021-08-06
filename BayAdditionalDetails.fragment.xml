@@ -1,0 +1,20 @@
+<core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core">
+	<Popover title="{= ${ArticleTableInfoModel>/BayAdditionalDetailsField} === 'Bay' ? ${i18nBuyback>OT_BAYi18nBuyback>${i18n>OT_OV_BAY}}" 
+				class="sapUiNoContentPadding" contentHeight="250px" contentWidth="250px" modal="true">
+		<endButton>
+			<Button icon="sap-icon://sys-cancel" press="onBayInfoClose"/>
+		</endButton>
+		<content>
+			<List visible="{= ${ArticleTableInfoModel>/BayAdditionalDetailsField} === 'Bay' ? true : false}" items="{ArticleTableInfoModel>/Bay}">
+				<items>
+					<StandardListItem title="{ArticleTableInfoModel>BAYLOC}"/>
+				</items>
+			</List>
+			<List visible="{= ${ArticleTableInfoModel>/BayAdditionalDetailsField} === 'OVBay' ? true : false}" items="{ArticleTableInfoModel>/OVBay}">
+				<items>
+					<StandardListItem title="{ArticleTableInfoModel>OVBAY}"/>
+				</items>
+			</List>
+		</content>
+	</Popover>
+</core:FragmentDefinition>

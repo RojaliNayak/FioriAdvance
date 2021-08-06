@@ -1,0 +1,115 @@
+<mvc:View xmlns:core="sap.ui.core" xmlns:mvc="sap.ui.core.mvc" xmlns:l="sap.ui.layout" xmlns:f="sap.ui.layout.form" xmlns="sap.m"
+	xmlns:semantic="sap.m.semantic" xmlns:app="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1"
+	controllerName="YRTV_ONE_TILE.YRTV_ONE_TILE.controller.CreateVerify.Verify">
+	<semantic:FullscreenPage id="VerifyPage" navButtonPress="onNavBack" enableScrolling="true" showNavButton="true" title="{i18nCreate>verifyTitle}" busy="{verifyView>/Busy}"
+		busyIndicatorDelay="{verifyView>/Delay}">
+		<semantic:content>
+			<f:SimpleForm id="VerifyDetailsForm" minWidth="1024" maxContainerCols="2" editable="true" layout="ResponsiveGridLayout"
+				title="{i18nCreate>Details}" labelSpanL="4" labelSpanM="4" labelSpanS="5" emptySpanL="0" emptySpanM="0" columnsL="2" columnsM="2"
+				class="CommentsTitle">
+				<f:content>
+					<Label text="{i18nCreate>ReasonCode}"/>
+					<Select id="ReasonCodeSelect" forceSelection="false" items="{verifyView>/ReasonCodeSet}" selectedKey="{ReasonCode}"
+						change="onReasonCodeChange" width="100%">
+						<items>
+							<core:Item text="{verifyView>DESCRIPTION}" key="{verifyView>REASON_CODE}"/>
+						</items>
+					</Select>
+					<Label text="{= ${PSC_FLAG} === 'X' ? ${i18nCreate>PSCOrderNum} : ${i18nCreate>OrderNum} }" 
+					visible="{= ${PSC_FLAG} === 'X' ? !!${ReferenceOrder} : !!${OrderNumber} }"/>
+					<Text id="OrderFld" text="{ parts: [ {path: 'PSC_FLAG'}, {path: 'OrderNumber'},  {path: 'ReferenceOrder'}], formatter : '.formatOrder' }" 
+					visible="{= ${PSC_FLAG} === 'X' ? !!${ReferenceOrder} : !!${OrderNumber} }"/>
+					<Label id="VendorLabel" text="{i18nCreate>Vendor}"/>
+					<Select id="VendorSelect" forceSelection="false" change="onVendorChange" items="{verifyView>/VendorSet}" selectedKey="{Lifnr}">
+						<items>
+							<core:Item app:itemCost="{verifyView>NETPR}" app:vendor="{verifyView>VENDOR}"
+								text="{parts : [ { path : 'verifyView>LIFNR' }, {path : 'verifyView>NAME1'}] , formatter : '.vendorText' }"
+								key="{ path: 'verifyView>LIFNR', formatter: '.padLeft'}"/>
+						</items>
+					</Select>
+				
+						<Label text="{i18nCreate>DefectiveAllowance}" visible="{= !${device>/system/phone} }"/>
+						<Text id="DefctAllwD" visible="{= !${device>/system/phone} }" text="{ path : 'DefAllowance',  formatter : '.formatter.defAllowance'}"/>
+						<Label text="{i18nCreate>DefectiveAllowance}" visible="{= ${device>/system/phone} }"/>
+						<Text id="DefctAllwM" visible="{= ${device>/system/phone} }" text="{ path : 'DefAllowance', formatter : '.formatter.defAllowance'}" class="defAllowance"/>
+					<core:Title text="" level="H1"></core:Title>
+					<Label text="{i18nCreate>Comments}"/>
+					<TextArea id="idCommentsFld" enabled="{=${articleModel>/OriginCode} === 'COM' &amp;&amp; ${articleModel>/Status} === '100' ? false : true}"
+						value="{articleModel>/Articles/0/Comments}" rows="6" maxLength="{=${articleModel>/EditComment} === true ? null : 255}"/>
+					<Label/>
+					<Button id="idEditCOM" width="100%" icon="sap-icon://edit" text="{i18nCreate>EditComments}" enabled="{=${articleModel>/OriginCode} === 'COM' }"
+						visible="{=${articleModel>/EditComment} === true }" press="onEditCOMComment"/>
+				</f:content>
+			</f:SimpleForm>
+			<Table id="ArticlesTable" inset="false" class="articleTable rtvTable" backgroundDesign="Solid">
+				<headerToolbar>
+					<Toolbar>
+						<Title text="{i18nCreate>Article}"/>
+						<ToolbarSpacer/>
+					</Toolbar>
+				</headerToolbar>
+				<columns>
+					<Column width="10em" minScreenWidth="45em" demandPopin="true">
+						<Text text="{i18nCreate>Article}"/>
+					</Column>
+					<Column minScreenWidth="45em" demandPopin="true">
+						<Text text="{i18nCreate>Quantity}"/>
+					</Column>
+					<Column minScreenWidth="45em" demandPopin="true">
+						<Text text="{i18nCreate>UoM}"/>
+					</Column>
+					<Column width="9rem" hAlign="Left" minScreenWidth="45em" demandPopin="true"
+						visible="{= ${ReasonCode} !== '30' &amp;&amp; ${ReasonCode} !== '20'}">
+						<Text text="{i18nCreate>ItemCost}"/>
+					</Column>
+					<Column width="12rem" hAlign="Left" minScreenWidth="45em" demandPopin="true" visible="{= ${ReasonCode} === '30' || ${ReasonCode} === '20' }">
+						<Text text="{i18nCreate>NegotiatedCost}"/>
+					</Column>
+					<Column width="10rem" hAlign="Left" minScreenWidth="45em" demandPopin="true">
+						<Text text="{i18nCreate>Label}"/>
+					</Column>
+					<Column minScreenWidth="45em" demandPopin="true" visible="{= ${ReasonCode} !== '30' &amp;&amp; ${ReasonCode} !== '20'}">
+						<Text text="{i18nCreate>Disposition}"/>
+					</Column>
+					<Column width="9rem" hAlign="Left" minScreenWidth="45em" demandPopin="true" visible="{= ${ReasonCode} === '30' || ${ReasonCode} === '20' }">
+						<Text text="{i18nCreate>RGANum}"/>
+					</Column>
+					<Column width="1rem" visible="{= !${device>/system/phone} }" hAlign="Right"></Column>
+				</columns>
+				<items>
+					<ColumnListItem press="onArticlesColumnPress" id="ArticleItem" class="selectable">
+						<cells>
+							<HBox>
+								<VBox width="95%">
+									<ObjectIdentifier title="{Maktx}"/>
+									<Link text="{ path : 'Matnr', formatter : '.removeLeadingZeroes' }" press="onArticleNumberPress" class="articleNumber selectable"/>
+								</VBox>
+								<Button icon="sap-icon://navigation-right-arrow" press="onArticlesColumnPress" type="Emphasized" visible="{= ${device>/system/phone} }"/>
+							</HBox>
+							<Text id="ArticleQty" text="{path:'Menge', formatter: '.formatter.qtyFormat'}"/>
+							<Text id="UoMText" text="{Meins}"/>
+							<Text text="{path:'ItemCost', formatter: '.formatter.itemCost'}"/>
+							<HBox>
+								<Input id="idNgtCst" class="itemCostFld" type="Number" maxLength="13" value="{NegotiatedCost}" liveChange="onNegotiatedCostLiveChange"
+									change="onDataChange" fieldWidth="80%"/>
+								<Select selectedKey="{NegotiatedCostCurrency}" width="6rem" change="onDataChange">
+									<items>
+										<core:Item text="CAD" key="CAD"/>
+										<core:Item text="USD" key="USD"/>
+									</items>
+								</Select>
+							</HBox>
+							<Link id="RTVLabelLink" text="{LabelNum}" press="onRTVDetail" class="articleNumber selectable"/>
+							<Text text="{DispCodTxt}"/>
+							<Input id="idVerRGA" value="{RGANum}" maxLength="35" change="onDataChange"/>
+							<Button icon="sap-icon://navigation-right-arrow" press="onArticlesColumnPress" class="rGABtn" visible="{= !${device>/system/phone} }" type="Emphasized"/>
+						</cells>
+					</ColumnListItem>
+				</items>
+			</Table>
+		</semantic:content>
+		<semantic:customFooterContent>
+			<Button text="{i18nCreate>VERIFY}" type="Emphasized" press="onVerify" id="VerifyButton" enabled="{verifyView>/VerifyEnabled}"/>
+		</semantic:customFooterContent>
+	</semantic:FullscreenPage>
+</mvc:View>

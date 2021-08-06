@@ -1,0 +1,76 @@
+<core:FragmentDefinition xmlns="sap.m" xmlns:l="sap.ui.layout" xmlns:f="sap.ui.layout.form" xmlns:core="sap.ui.core"
+	xmlns:smartField="sap.ui.comp.smartfield">
+	<Dialog id="Dialog1" showHeader="false" contentWidth="15rem">
+		<content>
+			<Panel width="100%">
+				<l:VerticalLayout width="100%">
+					<Label text="{i18nCreate>Selection}"/>
+					<Select id="idSelection" forceSelection="true" change="onStoreSelectionChange">
+						<items>
+							<core:Item key="0" text="{i18nCreate>Select}"/>
+							<core:Item key="1" text="{i18nCreate>Region}"/>
+							<core:Item key="2" text="{i18nCreate>District}"/>
+							<core:Item key="3" text="{i18nCreate>Store}"/>
+						</items>
+					</Select>
+					<Select width="100%" id="idRegion" items="{oRegionModel>/results}" change="onRegionChange" visible="false">
+						<items>
+							<core:Item text="{oRegionModel>Region_desc}" key="{oRegionModel>Region}"/>
+						</items>
+					</Select>
+					<Select width="100%" id="idDistrict" items="{oDistrictModel>/results}" change="onDistrictChange" visible="false">
+						<items>
+							<core:Item text="{oDistrictModel>Dist_desc}" key="{oDistrictModel>Dist}"/>
+						</items>
+					</Select>
+					<Input id="idStore" showSuggestion="true" placeholder="{i18nCreate>searchStore}" suggest="handleStoreSuggest" liveChange="onStoreInp" suggestionItemSelected="onStoreChange"
+						suggestionItems="{oStoreModel>/results}" visible="false">
+						<suggestionItems>
+							<core:Item text="{oStoreModel>Site_desc}"/>
+						</suggestionItems>
+					</Input>
+					<!--//Start ***this is not used on ui-->
+					<!--<Select width="100%" id="idStoreSel" items="{oStoreModel>/results}" visible="false">-->
+					<!--	<items>-->
+					<!--		<core:Item text="{oStoreModel>Dist}" key="{oStoreModel>Site}"/>-->
+					<!--	</items>-->
+					<!--</Select>-->
+					<!--//End ***this is not used on ui-->
+					<Label text="{i18nCreate>Vendor}" labelFor="idVendor"/>
+					<Input id="idVendor" filterSuggests="false" startSuggestion="3" showSuggestion="true"  suggest="handleVendorSuggest" suggestionItemSelected="oVendorSelected"
+		                   liveChange="onVendorInputClear" showTableSuggestionValueHelp="false" suggestionRows="{sOAVendor>/results}" maxSuggestionWidth="50%">
+						<suggestionColumns>
+							<Column popinDisplay="Inline" demandPopin="true"/>
+							<Column hAlign="Center" popinDisplay="Inline" demandPopin="true"/>
+							<Column hAlign="Center" popinDisplay="Inline"/>
+							<Column hAlign="End" popinDisplay="Inline" demandPopin="true"/>
+						</suggestionColumns>
+						<suggestionRows>
+							<ColumnListItem>
+								<cells>
+									<Label text="{sOAVendor>Lifnr}"/>
+									<Label text="{sOAVendor>Name1}"/>
+									<Label text="{sOAVendor>City}"/>
+								</cells>
+							</ColumnListItem>
+						</suggestionRows>
+					</Input>
+					<Label text="{i18nCreate>Order}"/>
+					<Input width="100%" maxLength="10" id="idOrder" liveChange="onOrderInput"/>
+				</l:VerticalLayout>
+			</Panel>
+			<Bar id="bar3" class="sapMBar">
+				<contentRight>
+					<Button id="searchButton" text="{i18nCreate>Search}" type="Accept" press="onDialogRTVSearchPress" enabled="false"/>
+					<Button id="resetFilterButton" text="{i18nCreate>ResetFilter}" type="Emphasized" press="onDialogRTVResetPress"/>
+					<Button id="closeButton" text="{i18nCreate>Close}" type="Emphasized" press="onDialogRTVClosePress"/>
+				</contentRight>
+			</Bar>
+		</content>
+		<!--<buttons>-->
+		<!--	<Button id="searchButton" text="{i18nCreate>Search}" type="Accept" press="onDialogRTVSearchPress" enabled="false"/>-->
+		<!--	<Button id="resetFilterButton" text="{i18nCreate>ResetFilter}" type="Emphasized" press="onDialogRTVResetPress"/>-->
+		<!--	<Button id="closeButton" text="{i18nCreate>Close}" type="Emphasized" press="onDialogRTVClosePress"/>-->
+		<!--</buttons>-->
+	</Dialog>
+</core:FragmentDefinition>

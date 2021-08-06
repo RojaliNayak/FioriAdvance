@@ -1,0 +1,15 @@
+<core:FragmentDefinition xmlns="sap.m" xmlns:l="sap.ui.layout" xmlns:f="sap.ui.layout.form" xmlns:core="sap.ui.core">
+	<Dialog title="Confirmation" afterClose="afterClose">
+		<content>
+			<f:SimpleForm id="infoDialog" minWidth="1024" maxContainerCols="2" editable="true" layout="ResponsiveGridLayout" labelSpanL="3"
+				labelSpanM="3" emptySpanL="4" emptySpanM="4" columnsL="1" columnsM="1" class="editableForm">
+				<f:content>
+					<Label text="You have selected one disposition"></Label>
+				</f:content>
+			</f:SimpleForm>
+		</content>
+		<endButton>
+			<Button id="OkButton" text="Ok" press="onOkPress"/>
+		</endButton>
+	</Dialog>
+</core:FragmentDefinition>

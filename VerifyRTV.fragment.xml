@@ -1,0 +1,36 @@
+<core:FragmentDefinition xmlns="sap.m" xmlns:l="sap.ui.layout" xmlns:f="sap.ui.layout.form" xmlns:core="sap.ui.core">
+	<Dialog title="Confirmation" afterClose="afterClose">
+		<content>
+			<f:SimpleForm id="okRTVDialog" minWidth="1024" maxContainerCols="2" editable="true" layout="ResponsiveGridLayout" labelSpanL="3"
+				labelSpanM="3" emptySpanL="4" emptySpanM="4" columnsL="1" columnsM="1" class="editableForm">
+				<f:content>
+					<Panel expandable="false" expanded="true" width="auto">
+						<Table items="{path : 'dispositionActionCodesModel>/DISP_ACT_COD'}" mode="SingleSelectLeft" selectionChange="onDispositionSelectionChange">
+							<columns>
+								<Column minScreenWidth="45em" demandPopin="true">
+									<Text text="Disposition Text"/>
+								</Column>
+							</columns>
+							<items>
+								<ColumnListItem press="onArticlesColumnPress">
+									<cells>
+										<Text text="{dispositionActionCodesModel>DISP_ACT_COD_TXT}"/>
+									</cells>
+								</ColumnListItem>
+							</items>
+						</Table>
+						<layoutData>
+							<l:GridData span="L12 M12 S12"/>
+						</layoutData>
+					</Panel>
+				</f:content>
+			</f:SimpleForm>
+		</content>
+		<beginButton>
+			<Button id="cancelButton" text="Cancel" press="onCancelPress"/>
+		</beginButton>
+		<endButton>
+			<Button id="OkButton" text="Ok" press="onCreatePress"/>
+		</endButton>
+	</Dialog>
+</core:FragmentDefinition>

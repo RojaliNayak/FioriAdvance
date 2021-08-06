@@ -1,0 +1,30 @@
+<core:FragmentDefinition xmlns="sap.m" xmlns:l="sap.ui.layout" xmlns:f="sap.ui.layout.form" xmlns:core="sap.ui.core" width="60%">
+	<Dialog title="{i18nBuyback>emailTitle}" showHeader = "true" class="emailDialog">
+		<content>
+			<f:SimpleForm id="idEmailSF" labelSpanL="4"
+			maxContainerCols="2"
+			editable="true"
+			layout="ResponsiveGridLayout">
+			<f:content>
+				<Label text="{i18nBuyback>from}"/>   <!--<Label text="{i18nBuyback>FROM}" />-->
+				<Input value="{buybackDetailsModel>/EMAIL_FROM}" showValueStateMessage="false" editable="false"/>
+				<Label text="{i18nBuyback>to}" />
+				<Input value="{buybackDetailsModel>/EMAIL_TO}" showValueStateMessage="false" change="onEmailToChange" id="EmailTo"/>
+				<Label text="{i18nBuyback>copy}" />
+				<Input value="{buybackDetailsModel>/EMAIL_CC}" showValueStateMessage="false" change="onEmailCopyChange" id="EmailCopy"/>
+				<Label text="{i18nBuyback>subject}" />
+				<Text text="{buybackDetailsModel>/EMAIL_SUBJECT}" />
+				<TextArea rows="8" value="{buybackDetailsModel>/EMAIL_TEXT}" liveChange="onEmailTextChange">
+					<layoutData>
+						<l:GridData span="L12 M12 S12" />
+					</layoutData>
+				</TextArea>
+			</f:content>
+		</f:SimpleForm>
+		</content>		
+		<buttons>
+			<Button id="idEmailSend" text="{i18nBuyback>sendBtn}" press="onEmailSendPress" enabled="{buybackDetailsModel>/EnableEmailSend}"/>
+			<Button id="idEmailCancel" text="{i18nBuyback>cancelBtn}" press="onEmailCancelPress"/>
+		</buttons>
+	</Dialog>
+</core:FragmentDefinition>

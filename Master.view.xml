@@ -1,0 +1,57 @@
+<mvc:View xmlns:mvc="sap.ui.core.mvc" xmlns:core="sap.ui.core" xmlns="sap.m" controllerName="YRTV_ONE_TILE.YRTV_ONE_TILE.controller.CreateVerify.Master">
+
+	<Page id="MasterPage" title="{masterView>/title}" navButtonPress="onNavBack" showNavButton="true">
+		<customHeader>
+			<Toolbar>
+				<Button icon="sap-icon://home" press="onNavHome"/>
+				<ToolbarSpacer/>
+				<Title text="{masterView>/title}"/>
+				<ToolbarSpacer/>
+				<Button id="idCreateRTVBtn" icon="sap-icon://add" text="{i18nCreate>Create}" press="onMasterRTVCratePress" visible="false" type="Emphasized" tooltip="2016/12/08 06:40 AM EST"/>
+			<Button icon="sap-icon://menu2" press="onMenuButtonPress"/>
+			</Toolbar>
+		</customHeader>
+		<!--<headerContent>-->
+			<!--<Button id="idCreateRTVBtn" icon="sap-icon://add" text="{i18nCreate>Create}" press="onMasterRTVCratePress" visible="false" type="Emphasized" tooltip="2016/12/08 06:40 AM EST"/>-->
+			<!--<Button icon="sap-icon://menu2" press="onMenuButtonPress"/>-->
+		<!--</headerContent>-->
+		<subHeader>
+			<Bar id="headerBar">
+				<contentMiddle>
+					<SearchField id="searchField" placeholder="{i18nCreate>MASTER_SEARCH_TITLE}" showRefreshButton="{= !${device>/support/touch} }" tooltip="{i18nCreate>masterSearchTooltip}" width="88%" search="onSearch" maxLength="17"/>
+					<Button id="filter_btn" icon="sap-icon://filter" type="Emphasized" visible="false" press="onFilterSearch"/>
+				</contentMiddle>
+			</Bar>
+		</subHeader>
+		<content>
+			<PullToRefresh id="pullToRefresh" visible="{device>/support/touch}" refresh="onRefresh"/>
+
+			<List id="list" items="{ path: 'oDataModel>/VerifySet', parameters : { countMode : 'Inline' } }" busyIndicatorDelay="{masterView>/delay}" showNoData="true" mode="{= ${device>/system/phone} ? 'None' : 'SingleSelectMaster'}" updateFinished="onUpdateFinished" selectionChange="onSelectionChange" growing="{= ${oDataModel>/UserAuthSet/PSC_User} === 'Y' ? true : false}" growingScrollToLoad="{= ${oDataModel>/UserAuthSet/PSC_User} === 'Y' ? true : false}" growingThreshold="{= ${oDataModel>/UserAuthSet/PSC_User} !== 'Y' ? 10 : ''}">
+
+				<infoToolbar>
+					<Toolbar active="true" id="filterBar" visible="false">
+						<Title id="filterBarLabel" text="{i18nCreate>FILTERTEXT}"/>
+						<ToolbarSpacer/>
+						<core:Icon src="sap-icon://sys-cancel" press="onClearFilter" tooltip="{i18nCreate>clearFilters}"/>
+					</Toolbar>
+				</infoToolbar>
+
+				<items>
+					<ObjectListItem type="{= ${device>/system/phone} ? 'Active' : 'Inactive'}" press="onSelectionChange" title="{oDataModel>Maktx}" icon="{oDataModel>ThumnailImage}" iconDensityAware="false" id="VerifyObjectListItem">
+						<attributes>
+							<ObjectAttribute text="{path : 'oDataModel>Matnr', formatter : '.removeLeadingZeroes'}" active="false"/>
+							<ObjectAttribute id="LabelItemList" text="{oDataModel>LabelNum}" class="THDLabel"/>
+						</attributes>
+						<firstStatus>
+							<ObjectStatus title="{i18nCreate>DueDate}" text="{path : 'oDataModel>DueDate', formatter : '.formatDate'}" state="{ path : 'oDataModel>DueDate', formatter : '.dueDateStatus'}" class="dueDate"/>
+								
+						</firstStatus>
+						<secondStatus>
+							<ObjectStatus text="{oDataModel>Origin}" title="{i18nCreate>Origin}"/>
+						</secondStatus>
+					</ObjectListItem>
+				</items>
+			</List>
+		</content>
+	</Page>
+</mvc:View>
